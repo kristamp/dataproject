@@ -2,7 +2,9 @@ import csv
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-data=[[],[],[]]
+accident=[]
+injury=[]
+death=[]
 class Accidents:
     def __init__(self, time, injury, death):
         self.time=time
@@ -18,17 +20,17 @@ def load_file (file_name):
         for line in a :
             try:
                 collision_time=line.split(',')[1].split()[1]
-                collision_injury=int(line.split(',')[13].split())
-                collision_death=int(line.split(',')[14].split())
+                collision_injury=int(line.split(',')[13][1:2])
+                collision_death=int(line.split(',')[14][1:2])
                 line_number+=1
                 print (line_number, collision_time, collision_injury, collision_death)
                 if collision_time=='00:01:00"':
                     continue
-                data[0].append(int(collision_time[:2]))
+                accident.append(int(collision_time[:2]))
                 if collision_injury>0:
-                    data[1].append(collision_time[:2])
-                if collision_injury>0:
-                    data[2].append(collision_time[:2])
+                    injury.append(collision_time[:2])
+                if collision_death>0:
+                    death.append(collision_time[:2])
             except:
                 pass
 
@@ -36,6 +38,7 @@ def load_file (file_name):
 
 if __name__=="__main__":
     load_file('collisions')
+    data=[accident,injury,death]
     print (data)
     num_bins = 24
     fig, axes = plt.subplots()
