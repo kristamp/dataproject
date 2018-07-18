@@ -41,19 +41,25 @@ if __name__=="__main__":
     data=[np.array(accident),np.array(injury),np.array(death)]
     print (data)
     num_bins = 24
-    fig, axes = plt.subplots()
+    # fig, axes = plt.subplots()
     colors = ['blue', 'red', 'green']
-    w0=np.ones_like(data[0])
-    w1 = np.ones_like(data[1])
-    w2 = np.ones_like(data[2])
-    w2[0:]=10
+    # w0=np.ones_like(data[0])
+    # w1 = np.ones_like(data[1])
+    # w2 = np.ones_like(data[2])
+    # w2[0:]=10
+    fig, ax1 = plt.subplots()
+    ax1.hist([data[0], data[1],np.empty(1)], num_bins, range=(0,23), color=colors, label=['Accidents', 'Injuries', 'Deaths'])
+    ax2=ax1.twinx()
+    ax2.hist([np.empty(1), np.empty(1),data[2]], num_bins, range=(0,23), color=colors, label=['Accidents', 'Injuries', 'Deaths'])
+    ax1.set_ylabel('Accidents & Injuries')
+    ax2.set_ylabel('Deaths', color='green')
+    ax2.tick_params('y', colors='green')
     # n, bins, patches = axes.hist(data)
-    n, bins, patches = axes.hist(data, num_bins, alpha=0.5, color=colors, label=['Accidents', 'Injuries', 'Death(x10)'], weights=[w0, w1, w2] )
-
-    axes.legend(prop={'size': 10})
-    axes.set_title('San Diego Car Collisions')
+    # n, bins, patches = axes.hist(data, num_bins, alpha=0.5, color=colors, label=['Accidents', 'Injuries', 'Death(x10)'], weights=[w0, w1, w2] )
+    ax2.legend(prop={'size': 10})
+    ax2.set_title('San Diego Car Collisions')
     # ax3.hist(x_multi, n_bins, histtype='bar')
     # ax3.set_title('different sample sizes')
-    plt.show()
+    fig.show()
 
 
